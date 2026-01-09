@@ -2,10 +2,10 @@
   "name": "wellness-rag-backend",
   "version": "1.0.0",
   "description": "Backend for Wellness RAG Micro-App: Ask Me Anything About Yoga",
-  "main": "index.js",
+  "main": "src/app.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
   },
   "keywords": [
     "yoga",

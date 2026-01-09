@@ -35,7 +35,7 @@ const feedbackSchema = new mongoose.Schema({
   }
 });
 
-// Index for analytics
+// Indexes for analytics
 feedbackSchema.index({ queryLogId: 1 });
 feedbackSchema.index({ isHelpful: 1 });
 feedbackSchema.index({ createdAt: -1 });

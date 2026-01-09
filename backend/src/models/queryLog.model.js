@@ -24,7 +24,7 @@ const retrievedChunkSchema = new mongoose.Schema({
   }
 }, { _id: false });
 
-// Main Query Log Schema
+// Main Query Log Schema - Stores all required data per assignment
 const queryLogSchema = new mongoose.Schema({
   // User's original query
   userQuery: {
@@ -84,7 +84,7 @@ const queryLogSchema = new mongoose.Schema({
   }
 });
 
-// Index for faster queries
+// Indexes for faster queries
 queryLogSchema.index({ createdAt: -1 });
 queryLogSchema.index({ isUnsafe: 1 });
 queryLogSchema.index({ userQuery: 'text' });

@@ -75,9 +75,9 @@ const knowledgeBaseSchema = new mongoose.Schema({
   }
 });
 
-// Text index for full-text search
+// Indexes
 knowledgeBaseSchema.index({ title: 'text', content: 'text', tags: 'text' });
 knowledgeBaseSchema.index({ category: 1 });
-knowledgeBaseSchema.index({ articleId: 1 });
+knowledgeBaseSchema.index({ articleId: 1 }, { unique: true });
 
 module.exports = mongoose.model('KnowledgeBase', knowledgeBaseSchema);
