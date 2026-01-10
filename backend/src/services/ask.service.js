@@ -3,187 +3,227 @@
  * Handles yoga query processing with RAG pipeline integration
  */
 
-const { Ollama } = require('ollama');
-const { QueryLog } = require('../models');
-const { processSafetyFilter } = require('./safety.service');
-const { retrieveChunks, buildRAGPrompt, getRAGStatus } = require('./rag.service');
+const ollama = require('ollama');
 const config = require('../config');
+const QueryLog = require('../models/queryLog.model');
+const ragService = require('./rag.service');
+const safetyService = require('./safety.service');
 
-// Initialize Ollama client
-const ollama = new Ollama({ host: config.OLLAMA.HOST });
+// Ollama client configuration
+const ollamaClient = new ollama.Ollama({
+  host: config.OLLAMA.HOST
+});
 
 /**
- * Generate response from Ollama model with RAG context
- * @param {string} systemPrompt - System prompt with instructions
- * @param {string} userPrompt - User prompt with context and query
- * @returns {string} - AI generated response
+ * Generate response using Ollama yoga model
+ * @param {string} query - User's question
+ * @param {string} context - RAG context from retrieved chunks
+ * @param {boolean} isUnsafe - Whether the query is flagged as unsafe
+ * @returns {Promise<string>} - AI generated response
  */
-const generateRAGResponse = async (systemPrompt, userPrompt) => {
+const generateOllamaResponse = async (query, context = '', isUnsafe = false) => {
+  let systemPrompt = `You are a knowledgeable and caring yoga instructor assistant. 
+You provide helpful, accurate information about yoga poses, breathing techniques, meditation, and wellness practices.
+Always be supportive and encouraging while prioritizing safety.`;
+
+  if (isUnsafe) {
+    systemPrompt += `
+
+IMPORTANT: This query has been flagged as potentially risky. 
+- DO NOT provide specific medical advice or diagnosis
+- DO NOT recommend poses without mentioning the need for professional guidance
+- Always emphasize consulting healthcare providers
+- Suggest gentle, safe alternatives when possible
+- Be extra cautious and caring in your response`;
+  }
+
+  if (context) {
+    systemPrompt += `
+
+Use the following context from our yoga knowledge base to inform your answer:
+
+${context}
+
+Base your response on this context when relevant, but you can also use your general knowledge about yoga.`;
+  }
+
   try {
-    const response = await ollama.chat({
+    const response = await ollamaClient.chat({
       model: config.OLLAMA.MODEL,
       messages: [
-        {
-          role: 'system',
-          content: systemPrompt
-        },
-        {
-          role: 'user',
-          content: userPrompt
-        }
-      ]
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: query }
+      ],
+      stream: false
     });
-    
+
     return response.message.content;
   } catch (error) {
-    console.error('Ollama error:', error.message);
-    throw new Error(`Failed to generate response from Ollama: ${error.message}`);
+    console.error('Ollama generation error:', error);
+    throw new Error('Failed to generate response from AI model');
   }
 };
 
 /**
- * Process a yoga-related query with RAG pipeline
+ * Process user query with RAG and safety checks
  * @param {string} query - User's question
  * @param {string} sessionId - Optional session identifier
- * @returns {Object} - Processed query result with sources
+ * @returns {Promise<Object>} - Processed response with answer and metadata
  */
-const processQuery = async (query, sessionId = '') => {
+const processQuery = async (query, sessionId = null) => {
   const startTime = Date.now();
-  
-  const trimmedQuery = query.trim();
 
-  // Process safety filter
-  const safetyResult = processSafetyFilter(trimmedQuery);
+  try {
+    // Step 1: Safety Check
+    const safetyCheck = safetyService.checkQuery(query);
+    
+    // Step 2: RAG Retrieval
+    let retrievedChunks = [];
+    let ragContext = '';
+    let sources = [];
 
-  let retrievedChunks = [];
-  let aiAnswer;
-
-  // If query is unsafe, still provide helpful guidance with safety warnings
-  if (safetyResult.isUnsafe) {
-    // Still retrieve relevant chunks for context
     try {
-      retrievedChunks = await retrieveChunks(trimmedQuery, config.RAG.TOP_K_CHUNKS);
-    } catch (error) {
-      console.warn('Could not retrieve chunks:', error.message);
+      const ragResult = await ragService.retrieveContext(query);
+      retrievedChunks = ragResult.chunks || [];
+      ragContext = ragResult.context || '';
+      sources = ragResult.sources || [];
+    } catch (ragError) {
+      console.error('RAG retrieval error:', ragError);
+      // Continue without RAG context if it fails
     }
 
-    // Build prompt with safety flag
-    const { systemPrompt, userPrompt } = buildRAGPrompt(
-      trimmedQuery, 
-      retrievedChunks, 
-      true // isUnsafe
-    );
+    // Step 3: Generate Response
+    let aiAnswer = '';
+    let safetyWarning = null;
+    let safeRecommendation = null;
 
-    // Generate response with safety awareness
-    const ragResponse = await generateRAGResponse(systemPrompt, userPrompt);
+    if (safetyCheck.isUnsafe) {
+      // Generate safety-aware response
+      safetyWarning = safetyCheck.safetyResponse.warning;
+      safeRecommendation = safetyCheck.safetyResponse.recommendation;
+      
+      // Generate AI response with safety context
+      const baseResponse = await generateOllamaResponse(query, ragContext, true);
+      
+      // Combine AI response with safety information
+      aiAnswer = `${safetyCheck.safetyResponse.warning}
 
-    // Prepend safety warning to response
-    aiAnswer = `⚠️ **Safety Notice**\n\n${safetyResult.safetyWarning}\n\n---\n\n${ragResponse}\n\n---\n\n**Recommended Safer Alternatives:**\n${safetyResult.safeRecommendation}`;
-  } else {
-    // Normal RAG flow
-    try {
-      // Retrieve relevant chunks from vector store
-      retrievedChunks = await retrieveChunks(trimmedQuery, config.RAG.TOP_K_CHUNKS);
-      console.log(`📚 Retrieved ${retrievedChunks.length} relevant chunks`);
-    } catch (error) {
-      console.warn('Could not retrieve chunks, using direct generation:', error.message);
+${baseResponse}
+
+---
+
+**🛡️ Safe Alternatives:**
+${safetyCheck.safetyResponse.recommendation}
+
+**⚕️ Professional Guidance:**
+${safetyCheck.safetyResponse.disclaimer}`;
+    } else {
+      // Generate normal response
+      aiAnswer = await generateOllamaResponse(query, ragContext, false);
     }
 
-    // Build RAG prompt with context
-    const { systemPrompt, userPrompt } = buildRAGPrompt(
-      trimmedQuery, 
-      retrievedChunks, 
-      false
-    );
+    const responseTime = Date.now() - startTime;
 
-    // Generate response using Ollama with RAG context
-    aiAnswer = await generateRAGResponse(systemPrompt, userPrompt);
+    // Step 4: Log to MongoDB
+    const queryLog = new QueryLog({
+      userQuery: query,
+      retrievedChunks: retrievedChunks.map(chunk => ({
+        chunkId: chunk.id,
+        title: chunk.title,
+        content: chunk.content.substring(0, 500),
+        source: chunk.category,
+        similarityScore: chunk.similarity
+      })),
+      aiAnswer,
+      isUnsafe: safetyCheck.isUnsafe,
+      safetyKeywordsDetected: safetyCheck.keywords,
+      safetyWarning,
+      safeRecommendation,
+      responseTime,
+      sessionId
+    });
+
+    await queryLog.save();
+
+    // Step 5: Return response
+    return {
+      success: true,
+      data: {
+        answer: aiAnswer,
+        sources: sources,
+        isUnsafe: safetyCheck.isUnsafe,
+        safetyInfo: safetyCheck.isUnsafe ? {
+          warning: safetyCheck.safetyResponse.warning,
+          recommendation: safetyCheck.safetyResponse.recommendation,
+          disclaimer: safetyCheck.safetyResponse.disclaimer,
+          detectedKeywords: safetyCheck.keywords,
+          detectedCategories: safetyCheck.categories
+        } : null,
+        queryId: queryLog._id,
+        responseTime
+      }
+    };
+
+  } catch (error) {
+    console.error('Error processing query:', error);
+    
+    // Log failed query
+    try {
+      await new QueryLog({
+        userQuery: query,
+        aiAnswer: 'Error processing query',
+        isUnsafe: false,
+        responseTime: Date.now() - startTime,
+        sessionId
+      }).save();
+    } catch (logError) {
+      console.error('Error logging failed query:', logError);
+    }
+
+    throw error;
   }
-
-  const responseTime = Date.now() - startTime;
-
-  // Create query log entry with all required data
-  const queryLog = new QueryLog({
-    userQuery: trimmedQuery,
-    retrievedChunks: retrievedChunks.map(chunk => ({
-      chunkId: chunk.chunkId,
-      title: chunk.title,
-      content: chunk.content,
-      source: chunk.source,
-      similarityScore: chunk.similarityScore
-    })),
-    aiAnswer,
-    isUnsafe: safetyResult.isUnsafe,
-    safetyKeywordsDetected: safetyResult.safetyKeywordsDetected,
-    safetyWarning: safetyResult.safetyWarning,
-    safeRecommendation: safetyResult.safeRecommendation,
-    responseTime,
-    sessionId
-  });
-
-  // Save to MongoDB
-  await queryLog.save();
-
-  return {
-    queryId: queryLog._id,
-    query: trimmedQuery,
-    answer: aiAnswer,
-    sources: retrievedChunks.map(chunk => ({
-      id: chunk.chunkId,
-      title: chunk.title,
-      source: chunk.source,
-      category: chunk.category,
-      relevanceScore: chunk.similarityScore
-    })),
-    isUnsafe: safetyResult.isUnsafe,
-    safetyWarning: safetyResult.isUnsafe ? safetyResult.safetyWarning : null,
-    safeRecommendation: safetyResult.isUnsafe ? safetyResult.safeRecommendation : null,
-    responseTime: `${responseTime}ms`
-  };
 };
 
 /**
- * Get query history with pagination
- * @param {Object} options - Query options
- * @returns {Object} - Paginated query history
+ * Get query history
+ * @param {number} limit - Number of records to return
+ * @returns {Promise<Array>} - Array of query logs
  */
-const getQueryHistory = async (options = {}) => {
-  const { limit = 10, page = 1, unsafe = null } = options;
-  
-  const filter = {};
-  if (unsafe !== null) {
-    filter.isUnsafe = unsafe === 'true';
-  }
-
-  const queries = await QueryLog.find(filter)
+const getQueryHistory = async (limit = 50) => {
+  return await QueryLog.find()
     .sort({ createdAt: -1 })
-    .skip((parseInt(page) - 1) * parseInt(limit))
-    .limit(parseInt(limit))
+    .limit(limit)
     .select('-__v');
-
-  const total = await QueryLog.countDocuments(filter);
-
-  return {
-    queries,
-    pagination: {
-      total,
-      page: parseInt(page),
-      limit: parseInt(limit),
-      pages: Math.ceil(total / parseInt(limit))
-    }
-  };
 };
 
 /**
- * Get RAG system status
- * @returns {Object} - RAG status information
+ * Get safety statistics
+ * @returns {Promise<Object>} - Safety statistics
  */
-const getSystemStatus = () => {
-  return getRAGStatus();
+const getSafetyStats = async () => {
+  const total = await QueryLog.countDocuments();
+  const unsafe = await QueryLog.countDocuments({ isUnsafe: true });
+  
+  const keywordStats = await QueryLog.aggregate([
+    { $match: { isUnsafe: true } },
+    { $unwind: '$safetyKeywordsDetected' },
+    { $group: { _id: '$safetyKeywordsDetected', count: { $sum: 1 } } },
+    { $sort: { count: -1 } },
+    { $limit: 10 }
+  ]);
+
+  return {
+    totalQueries: total,
+    unsafeQueries: unsafe,
+    safeQueries: total - unsafe,
+    unsafePercentage: total > 0 ? ((unsafe / total) * 100).toFixed(2) : 0,
+    topSafetyKeywords: keywordStats
+  };
 };
 
 module.exports = {
   processQuery,
   getQueryHistory,
-  getSystemStatus
+  getSafetyStats,
+  generateOllamaResponse
 };

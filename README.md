@@ -53,7 +53,47 @@ This application provides intelligent, context-aware answers about yoga poses, b
 └── README.md
 ```
 
-## 🚀 Setup Instructions
+## 🚀 Quick Start (Easiest Way)
+
+### Prerequisites
+Make sure these are running before starting:
+- **MongoDB**: `mongod`
+- **Ollama**: `ollama serve`
+
+### One-Click Start
+
+**Option 1: PowerShell Script (Recommended)**
+```powershell
+.\start.ps1
+```
+
+**Option 2: Batch File (Double-click)**
+```
+start.bat
+```
+
+**Option 3: Manual Start**
+```bash
+# Terminal 1 - Backend
+cd backend && npm start
+
+# Terminal 2 - Frontend
+cd frontend && streamlit run app.py
+```
+
+### Stop All Services
+```powershell
+.\stop.ps1
+```
+
+### Access Points
+- 🎨 **Frontend**: http://localhost:8501
+- 🔧 **Backend API**: http://localhost:3000
+- 💚 **Health Check**: http://localhost:3000/health
+
+---
+
+## 🛠️ Full Setup Instructions
 
 ### Prerequisites
 

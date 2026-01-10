@@ -1,59 +1,72 @@
-const { askService } = require('../services');
+const askService = require('../services/ask.service');
 
 /**
- * Handle POST /api/ask
+ * Handle yoga question
+ * POST /api/ask
  */
-const askQuestion = async (req, res) => {
+const askQuestion = async (req, res, next) => {
   try {
-    const { query, sessionId = '' } = req.body;
+    const { query, sessionId } = req.body;
 
-    // Validate input
     if (!query || typeof query !== 'string' || query.trim().length === 0) {
       return res.status(400).json({
         success: false,
-        message: 'Please provide a valid query'
+        error: 'Query is required and must be a non-empty string'
       });
     }
 
-    const result = await askService.processQuery(query, sessionId);
+    if (query.length > 1000) {
+      return res.status(400).json({
+        success: false,
+        error: 'Query must be less than 1000 characters'
+      });
+    }
 
-    res.status(200).json({
-      success: true,
-      data: result
-    });
-
+    const result = await askService.processQuery(query.trim(), sessionId);
+    
+    res.json(result);
   } catch (error) {
-    console.error('Error processing query:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Failed to process your query',
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined
-    });
+    next(error);
   }
 };
 
 /**
- * Handle GET /api/ask/history
+ * Get query history
+ * GET /api/ask/history
  */
-const getHistory = async (req, res) => {
+const getHistory = async (req, res, next) => {
   try {
-    const result = await askService.getQueryHistory(req.query);
-
-    res.status(200).json({
+    const limit = parseInt(req.query.limit) || 50;
+    const history = await askService.getQueryHistory(limit);
+    
+    res.json({
       success: true,
-      data: result
+      data: history
     });
-
   } catch (error) {
-    console.error('Error fetching query history:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Failed to fetch query history'
+    next(error);
+  }
+};
+
+/**
+ * Get safety statistics
+ * GET /api/ask/safety-stats
+ */
+const getSafetyStats = async (req, res, next) => {
+  try {
+    const stats = await askService.getSafetyStats();
+    
+    res.json({
+      success: true,
+      data: stats
     });
+  } catch (error) {
+    next(error);
   }
 };
 
 module.exports = {
   askQuestion,
-  getHistory
+  getHistory,
+  getSafetyStats
 };
