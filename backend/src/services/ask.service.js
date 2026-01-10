@@ -1,5 +1,41 @@
+const { Ollama } = require('ollama');
 const { QueryLog } = require('../models');
 const { processSafetyFilter } = require('./safety.service');
+const config = require('../config');
+
+// Initialize Ollama client
+const ollama = new Ollama({ host: config.OLLAMA.HOST });
+
+/**
+ * Generate response from Ollama model
+ * @param {string} query - User's question
+ * @returns {string} - AI generated response
+ */
+const generateOllamaResponse = async (query) => {
+  try {
+    const response = await ollama.chat({
+      model: config.OLLAMA.MODEL,
+      messages: [
+        {
+          role: 'system',
+          content: `You are a knowledgeable yoga instructor and wellness expert. 
+Provide helpful, accurate, and safe advice about yoga poses, breathing techniques, 
+meditation practices, and general wellness. Always prioritize user safety and 
+recommend consulting healthcare professionals for medical concerns.`
+        },
+        {
+          role: 'user',
+          content: query
+        }
+      ]
+    });
+    
+    return response.message.content;
+  } catch (error) {
+    console.error('Ollama error:', error.message);
+    throw new Error(`Failed to generate response from Ollama: ${error.message}`);
+  }
+};
 
 /**
  * Process a yoga-related query
@@ -15,22 +51,17 @@ const processQuery = async (query, sessionId = '') => {
   // Process safety filter
   const safetyResult = processSafetyFilter(trimmedQuery);
 
-  // TODO: RAG Pipeline Integration
-  // 1. Generate embeddings for the query
-  // 2. Search vector store for relevant chunks
-  // 3. Retrieve top-k matching chunks
-  // 4. Construct prompt with retrieved context
-  // 5. Generate AI response
-
-  // Placeholder for RAG response
+  // Placeholder for RAG response (future: retrieve relevant chunks)
   const retrievedChunks = [];
 
-  // Placeholder AI response
-  let aiAnswer = "This is a placeholder response. The RAG pipeline will be integrated to provide accurate yoga-related answers.";
+  let aiAnswer;
 
-  // If query is unsafe, modify the response
+  // If query is unsafe, provide safety response
   if (safetyResult.isUnsafe) {
     aiAnswer = `⚠️ **Safety Notice**\n\n${safetyResult.safetyWarning}\n\n**Recommended Alternatives:**\n${safetyResult.safeRecommendation}`;
+  } else {
+    // Generate response using Ollama yoga model
+    aiAnswer = await generateOllamaResponse(trimmedQuery);
   }
 
   const responseTime = Date.now() - startTime;

@@ -6,6 +6,12 @@ module.exports = {
   // MongoDB configuration
   MONGODB_URI: process.env.MONGODB_URI || 'mongodb://localhost:27017/yoga_rag_db',
   
+  // Ollama configuration
+  OLLAMA: {
+    HOST: process.env.OLLAMA_HOST || 'http://localhost:11434',
+    MODEL: process.env.OLLAMA_MODEL || 'yoga'
+  },
+  
   // RAG configuration
   RAG: {
     TOP_K_CHUNKS: 5,
