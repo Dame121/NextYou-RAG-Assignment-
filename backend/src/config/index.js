@@ -15,7 +15,7 @@ module.exports = {
   // RAG configuration
   RAG: {
     TOP_K_CHUNKS: 5,
-    SIMILARITY_THRESHOLD: 0.7
+    SIMILARITY_THRESHOLD: 0.3  // Lowered for better recall
   },
   
   // Safety configuration

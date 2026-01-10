@@ -4,6 +4,7 @@ const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
 const connectDB = require('./config/db.config');
+const { initializeRAG, getRAGStatus } = require('./services/rag.service');
 
 // Import routes
 const askRoutes = require('./routes/ask.routes');
@@ -14,6 +15,19 @@ const PORT = process.env.PORT || 3000;
 
 // Connect to MongoDB
 connectDB();
+
+// Initialize RAG pipeline on startup
+const initRAG = async () => {
+  try {
+    console.log('🔄 Initializing RAG pipeline...');
+    const stats = await initializeRAG();
+    console.log(`✅ RAG ready with ${stats.vectorCount} vectors`);
+  } catch (error) {
+    console.warn('⚠️ RAG initialization warning:', error.message);
+    console.log('   Run "npm run init-rag" to build the vector index');
+  }
+};
+initRAG();
 
 // Middleware
 app.use(cors());
@@ -35,16 +49,31 @@ app.get('/', (req, res) => {
       askHistory: 'GET /api/ask/history',
       feedback: 'POST /api/feedback',
       feedbackStats: 'GET /api/feedback/stats',
+      ragStatus: 'GET /api/rag/status',
       health: 'GET /health'
     }
   });
 });
 
+// RAG status endpoint
+app.get('/api/rag/status', (req, res) => {
+  const status = getRAGStatus();
+  res.json({
+    success: true,
+    data: status
+  });
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
+  const ragStatus = getRAGStatus();
   res.json({ 
     status: 'OK', 
     database: 'MongoDB connected',
+    rag: {
+      initialized: ragStatus.initialized,
+      vectorCount: ragStatus.vectorCount
+    },
     timestamp: new Date().toISOString()
   });
 });

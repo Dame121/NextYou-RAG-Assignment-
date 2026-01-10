@@ -1,15 +1,16 @@
 import streamlit as st
 import requests
-import time
 
 # Configuration
 API_URL = "http://localhost:3000/api/ask"
+RAG_STATUS_URL = "http://localhost:3000/api/rag/status"
+FEEDBACK_URL = "http://localhost:3000/api/feedback"
 
 # Page configuration
 st.set_page_config(
-    page_title="🧘 Yoga Assistant",
+    page_title="🧘 Yoga Assistant - RAG",
     page_icon="🧘",
-    layout="centered"
+    layout="wide"
 )
 
 # Custom CSS
@@ -19,12 +20,13 @@ st.markdown("""
         text-align: center;
         padding: 1rem 0;
     }
-    .response-box {
-        background-color: #f0f7f0;
-        padding: 1.5rem;
-        border-radius: 10px;
-        border-left: 4px solid #4CAF50;
-        margin: 1rem 0;
+    .source-box {
+        background-color: #e8f4ea;
+        padding: 0.8rem;
+        border-radius: 8px;
+        border-left: 3px solid #4CAF50;
+        margin: 0.5rem 0;
+        font-size: 0.9rem;
     }
     .safety-warning {
         background-color: #fff3e0;
@@ -33,167 +35,222 @@ st.markdown("""
         border-left: 4px solid #ff9800;
         margin: 1rem 0;
     }
-    .stats-box {
-        background-color: #e3f2fd;
-        padding: 0.5rem 1rem;
-        border-radius: 5px;
-        font-size: 0.85rem;
+    .answer-box {
+        background-color: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 10px;
+        margin: 1rem 0;
     }
 </style>
 """, unsafe_allow_html=True)
 
 # Header
 st.markdown("<h1 class='main-header'>🧘 Ask Me Anything About Yoga</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: #666;'>Your AI-powered yoga assistant for poses, breathing, meditation, and wellness</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #666;'>AI-powered yoga assistant with RAG (Retrieval-Augmented Generation)</p>", unsafe_allow_html=True)
 
-st.divider()
-
-# Initialize session state for chat history
+# Initialize session state
 if "messages" not in st.session_state:
     st.session_state.messages = []
-
-# Display chat history
-for message in st.session_state.messages:
-    with st.chat_message(message["role"], avatar="🧑" if message["role"] == "user" else "🧘"):
-        st.markdown(message["content"])
-        if message["role"] == "assistant" and "response_time" in message:
-            st.caption(f"⏱️ Response time: {message['response_time']}")
-
-# Chat input
-if prompt := st.chat_input("Ask a yoga question... (e.g., 'What is the best pose for back pain?')"):
-    # Add user message to chat
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    
-    # Display user message
-    with st.chat_message("user", avatar="🧑"):
-        st.markdown(prompt)
-    
-    # Get AI response
-    with st.chat_message("assistant", avatar="🧘"):
-        with st.spinner("🧘 Consulting the yoga wisdom..."):
-            try:
-                response = requests.post(
-                    API_URL,
-                    json={"query": prompt},
-                    timeout=120
-                )
-                
-                if response.status_code == 200:
-                    data = response.json()
-                    
-                    if data.get("success"):
-                        result = data["data"]
-                        answer = result["answer"]
-                        response_time = result.get("responseTime", "N/A")
-                        is_unsafe = result.get("isUnsafe", False)
-                        
-                        # Display safety warning if applicable
-                        if is_unsafe:
-                            st.warning("⚠️ Safety Notice")
-                        
-                        # Display the answer
-                        st.markdown(answer)
-                        st.caption(f"⏱️ Response time: {response_time}")
-                        
-                        # Add to session state
-                        st.session_state.messages.append({
-                            "role": "assistant",
-                            "content": answer,
-                            "response_time": response_time,
-                            "is_unsafe": is_unsafe
-                        })
-                    else:
-                        error_msg = "Failed to get a response from the server."
-                        st.error(error_msg)
-                        st.session_state.messages.append({
-                            "role": "assistant",
-                            "content": f"❌ {error_msg}"
-                        })
-                else:
-                    error_msg = f"Server error: {response.status_code}"
-                    st.error(error_msg)
-                    st.session_state.messages.append({
-                        "role": "assistant",
-                        "content": f"❌ {error_msg}"
-                    })
-                    
-            except requests.exceptions.ConnectionError:
-                error_msg = "Cannot connect to the backend server. Make sure it's running on http://localhost:3000"
-                st.error(error_msg)
-                st.session_state.messages.append({
-                    "role": "assistant",
-                    "content": f"❌ {error_msg}"
-                })
-            except requests.exceptions.Timeout:
-                error_msg = "Request timed out. The server took too long to respond."
-                st.error(error_msg)
-                st.session_state.messages.append({
-                    "role": "assistant",
-                    "content": f"❌ {error_msg}"
-                })
-            except Exception as e:
-                error_msg = f"An error occurred: {str(e)}"
-                st.error(error_msg)
-                st.session_state.messages.append({
-                    "role": "assistant",
-                    "content": f"❌ {error_msg}"
-                })
+if "last_sources" not in st.session_state:
+    st.session_state.last_sources = []
+if "last_is_unsafe" not in st.session_state:
+    st.session_state.last_is_unsafe = False
+if "last_query_id" not in st.session_state:
+    st.session_state.last_query_id = None
 
 # Sidebar
 with st.sidebar:
-    st.header("🧘 Yoga Assistant")
+    st.header("🧘 Yoga RAG Assistant")
+    
+    # RAG Status
+    st.subheader("📊 System Status")
+    try:
+        status_response = requests.get(RAG_STATUS_URL, timeout=5)
+        if status_response.status_code == 200:
+            status_data = status_response.json()
+            if status_data.get("success"):
+                rag_status = status_data["data"]
+                st.success("✅ RAG System Online")
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.metric("Vectors", rag_status.get("vectorCount", 0))
+                with col2:
+                    st.metric("Dim", rag_status.get("dimension", "N/A"))
+        else:
+            st.warning("⚠️ Could not fetch status")
+    except:
+        st.error("❌ Backend offline")
+    
     st.markdown("---")
     
-    st.subheader("💡 Example Questions")
+    st.subheader("💡 Try These Questions")
     example_questions = [
-        "What are the benefits of meditation?",
-        "How do I do a proper sun salutation?",
-        "Best yoga poses for beginners?",
-        "How can yoga help with stress?",
-        "What is pranayama breathing?",
-        "Yoga poses for back pain relief?"
+        "Benefits of meditation?",
+        "How to do downward dog?",
+        "Beginner yoga poses?",
+        "What is pranayama?",
+        "Yoga for stress relief?",
+        "Inversion contraindications?"
     ]
     
     for q in example_questions:
-        if st.button(q, key=q, use_container_width=True):
-            st.session_state.example_query = q
-            st.rerun()
+        if st.button(q, key=f"ex_{q}", use_container_width=True):
+            st.session_state.pending_query = q
     
     st.markdown("---")
     
-    # Clear chat button
-    if st.button("🗑️ Clear Chat History", use_container_width=True):
+    if st.button("🗑️ Clear Chat", use_container_width=True):
         st.session_state.messages = []
+        st.session_state.last_sources = []
+        st.session_state.last_is_unsafe = False
+        st.session_state.last_query_id = None
         st.rerun()
     
     st.markdown("---")
     st.caption("Powered by Ollama 🦙")
-    st.caption("Backend: Node.js + MongoDB")
+    st.caption("RAG with Vector Search")
 
-# Handle example query selection
-if "example_query" in st.session_state:
-    query = st.session_state.example_query
-    del st.session_state.example_query
+# Main layout
+col_chat, col_sources = st.columns([2, 1])
+
+with col_chat:
+    st.subheader("💬 Conversation")
     
-    # Add user message
-    st.session_state.messages.append({"role": "user", "content": query})
+    # Chat container
+    chat_container = st.container(height=450)
+    with chat_container:
+        for msg in st.session_state.messages:
+            with st.chat_message(msg["role"], avatar="🧑" if msg["role"] == "user" else "🧘"):
+                st.markdown(msg["content"])
+                if msg["role"] == "assistant" and msg.get("response_time"):
+                    st.caption(f"⏱️ {msg['response_time']}")
     
-    # Get response
-    try:
-        response = requests.post(API_URL, json={"query": query}, timeout=120)
-        if response.status_code == 200:
-            data = response.json()
-            if data.get("success"):
-                result = data["data"]
+    # Input
+    query = st.chat_input("Ask about yoga poses, breathing, meditation...")
+    
+    # Handle example button clicks
+    if "pending_query" in st.session_state:
+        query = st.session_state.pending_query
+        del st.session_state.pending_query
+
+    if query:
+        # Add user message
+        st.session_state.messages.append({"role": "user", "content": query})
+        
+        # Get response
+        with st.spinner("🧘 Searching knowledge base..."):
+            try:
+                response = requests.post(API_URL, json={"query": query}, timeout=120)
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get("success"):
+                        result = data["data"]
+                        
+                        # Store results
+                        st.session_state.last_sources = result.get("sources", [])
+                        st.session_state.last_is_unsafe = result.get("isUnsafe", False)
+                        st.session_state.last_query_id = result.get("queryId")
+                        
+                        # Add assistant message
+                        st.session_state.messages.append({
+                            "role": "assistant",
+                            "content": result["answer"],
+                            "response_time": result.get("responseTime", "N/A"),
+                            "sources": result.get("sources", []),
+                            "is_unsafe": result.get("isUnsafe", False)
+                        })
+                    else:
+                        st.session_state.messages.append({
+                            "role": "assistant",
+                            "content": "❌ Failed to get response"
+                        })
+                else:
+                    st.session_state.messages.append({
+                        "role": "assistant", 
+                        "content": f"❌ Server error: {response.status_code}"
+                    })
+            except requests.exceptions.ConnectionError:
                 st.session_state.messages.append({
                     "role": "assistant",
-                    "content": result["answer"],
-                    "response_time": result.get("responseTime", "N/A")
+                    "content": "❌ Cannot connect to backend server"
                 })
-    except:
-        st.session_state.messages.append({
-            "role": "assistant",
-            "content": "❌ Failed to get response"
-        })
+            except Exception as e:
+                st.session_state.messages.append({
+                    "role": "assistant",
+                    "content": f"❌ Error: {str(e)}"
+                })
+        
+        st.rerun()
+
+with col_sources:
+    st.subheader("📚 Sources Used")
     
-    st.rerun()
+    sources = st.session_state.last_sources
+    is_unsafe = st.session_state.last_is_unsafe
+    query_id = st.session_state.last_query_id
+    
+    if sources:
+        for i, source in enumerate(sources):
+            title = source.get('title', f'Source {i+1}')
+            with st.expander(f"📄 {title[:40]}..." if len(title) > 40 else f"📄 {title}", expanded=(i==0)):
+                st.markdown(f"**Source:** {source.get('source', 'Knowledge Base')}")
+                st.markdown(f"**Category:** {source.get('category', 'N/A')}")
+                score = source.get('relevanceScore', 0)
+                if score:
+                    st.progress(float(score), text=f"Relevance: {float(score):.0%}")
+    else:
+        st.info("📝 Ask a question to see sources")
+    
+    st.markdown("---")
+    
+    # Safety Status
+    st.subheader("🛡️ Safety Check")
+    if is_unsafe:
+        st.error("""
+        ⚠️ **Health-Sensitive Query**
+        
+        Please consult a healthcare provider for personalized advice.
+        """)
+    elif query_id:
+        st.success("✅ No safety concerns")
+    else:
+        st.info("Safety status will appear here")
+    
+    st.markdown("---")
+    
+    # Feedback
+    st.subheader("📝 Was this helpful?")
+    if query_id:
+        c1, c2 = st.columns(2)
+        with c1:
+            if st.button("👍 Yes", use_container_width=True):
+                try:
+                    requests.post(FEEDBACK_URL, json={
+                        "queryId": query_id,
+                        "rating": "helpful"
+                    }, timeout=5)
+                    st.success("Thanks!")
+                except:
+                    pass
+        with c2:
+            if st.button("👎 No", use_container_width=True):
+                try:
+                    requests.post(FEEDBACK_URL, json={
+                        "queryId": query_id,
+                        "rating": "not_helpful"
+                    }, timeout=5)
+                    st.info("Thanks!")
+                except:
+                    pass
+    else:
+        st.caption("Ask a question first")
+
+# Footer
+st.markdown("---")
+st.markdown("""
+<div style='text-align: center; color: #888; font-size: 0.8rem;'>
+    🧘 Wellness RAG Micro-App | Streamlit + Node.js + MongoDB + Ollama<br>
+    ⚠️ For educational purposes only. Consult healthcare professionals for medical advice.
+</div>
+""", unsafe_allow_html=True)

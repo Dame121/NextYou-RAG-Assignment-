@@ -1,31 +1,35 @@
+/**
+ * Ask Service
+ * Handles yoga query processing with RAG pipeline integration
+ */
+
 const { Ollama } = require('ollama');
 const { QueryLog } = require('../models');
 const { processSafetyFilter } = require('./safety.service');
+const { retrieveChunks, buildRAGPrompt, getRAGStatus } = require('./rag.service');
 const config = require('../config');
 
 // Initialize Ollama client
 const ollama = new Ollama({ host: config.OLLAMA.HOST });
 
 /**
- * Generate response from Ollama model
- * @param {string} query - User's question
+ * Generate response from Ollama model with RAG context
+ * @param {string} systemPrompt - System prompt with instructions
+ * @param {string} userPrompt - User prompt with context and query
  * @returns {string} - AI generated response
  */
-const generateOllamaResponse = async (query) => {
+const generateRAGResponse = async (systemPrompt, userPrompt) => {
   try {
     const response = await ollama.chat({
       model: config.OLLAMA.MODEL,
       messages: [
         {
           role: 'system',
-          content: `You are a knowledgeable yoga instructor and wellness expert. 
-Provide helpful, accurate, and safe advice about yoga poses, breathing techniques, 
-meditation practices, and general wellness. Always prioritize user safety and 
-recommend consulting healthcare professionals for medical concerns.`
+          content: systemPrompt
         },
         {
           role: 'user',
-          content: query
+          content: userPrompt
         }
       ]
     });
@@ -38,10 +42,10 @@ recommend consulting healthcare professionals for medical concerns.`
 };
 
 /**
- * Process a yoga-related query
+ * Process a yoga-related query with RAG pipeline
  * @param {string} query - User's question
  * @param {string} sessionId - Optional session identifier
- * @returns {Object} - Processed query result
+ * @returns {Object} - Processed query result with sources
  */
 const processQuery = async (query, sessionId = '') => {
   const startTime = Date.now();
@@ -51,25 +55,63 @@ const processQuery = async (query, sessionId = '') => {
   // Process safety filter
   const safetyResult = processSafetyFilter(trimmedQuery);
 
-  // Placeholder for RAG response (future: retrieve relevant chunks)
-  const retrievedChunks = [];
-
+  let retrievedChunks = [];
   let aiAnswer;
 
-  // If query is unsafe, provide safety response
+  // If query is unsafe, still provide helpful guidance with safety warnings
   if (safetyResult.isUnsafe) {
-    aiAnswer = `⚠️ **Safety Notice**\n\n${safetyResult.safetyWarning}\n\n**Recommended Alternatives:**\n${safetyResult.safeRecommendation}`;
+    // Still retrieve relevant chunks for context
+    try {
+      retrievedChunks = await retrieveChunks(trimmedQuery, config.RAG.TOP_K_CHUNKS);
+    } catch (error) {
+      console.warn('Could not retrieve chunks:', error.message);
+    }
+
+    // Build prompt with safety flag
+    const { systemPrompt, userPrompt } = buildRAGPrompt(
+      trimmedQuery, 
+      retrievedChunks, 
+      true // isUnsafe
+    );
+
+    // Generate response with safety awareness
+    const ragResponse = await generateRAGResponse(systemPrompt, userPrompt);
+
+    // Prepend safety warning to response
+    aiAnswer = `⚠️ **Safety Notice**\n\n${safetyResult.safetyWarning}\n\n---\n\n${ragResponse}\n\n---\n\n**Recommended Safer Alternatives:**\n${safetyResult.safeRecommendation}`;
   } else {
-    // Generate response using Ollama yoga model
-    aiAnswer = await generateOllamaResponse(trimmedQuery);
+    // Normal RAG flow
+    try {
+      // Retrieve relevant chunks from vector store
+      retrievedChunks = await retrieveChunks(trimmedQuery, config.RAG.TOP_K_CHUNKS);
+      console.log(`📚 Retrieved ${retrievedChunks.length} relevant chunks`);
+    } catch (error) {
+      console.warn('Could not retrieve chunks, using direct generation:', error.message);
+    }
+
+    // Build RAG prompt with context
+    const { systemPrompt, userPrompt } = buildRAGPrompt(
+      trimmedQuery, 
+      retrievedChunks, 
+      false
+    );
+
+    // Generate response using Ollama with RAG context
+    aiAnswer = await generateRAGResponse(systemPrompt, userPrompt);
   }
 
   const responseTime = Date.now() - startTime;
 
-  // Create query log entry
+  // Create query log entry with all required data
   const queryLog = new QueryLog({
     userQuery: trimmedQuery,
-    retrievedChunks,
+    retrievedChunks: retrievedChunks.map(chunk => ({
+      chunkId: chunk.chunkId,
+      title: chunk.title,
+      content: chunk.content,
+      source: chunk.source,
+      similarityScore: chunk.similarityScore
+    })),
     aiAnswer,
     isUnsafe: safetyResult.isUnsafe,
     safetyKeywordsDetected: safetyResult.safetyKeywordsDetected,
@@ -89,7 +131,9 @@ const processQuery = async (query, sessionId = '') => {
     sources: retrievedChunks.map(chunk => ({
       id: chunk.chunkId,
       title: chunk.title,
-      source: chunk.source
+      source: chunk.source,
+      category: chunk.category,
+      relevanceScore: chunk.similarityScore
     })),
     isUnsafe: safetyResult.isUnsafe,
     safetyWarning: safetyResult.isUnsafe ? safetyResult.safetyWarning : null,
@@ -130,7 +174,16 @@ const getQueryHistory = async (options = {}) => {
   };
 };
 
+/**
+ * Get RAG system status
+ * @returns {Object} - RAG status information
+ */
+const getSystemStatus = () => {
+  return getRAGStatus();
+};
+
 module.exports = {
   processQuery,
-  getQueryHistory
+  getQueryHistory,
+  getSystemStatus
 };

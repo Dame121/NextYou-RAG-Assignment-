@@ -1,0 +1,344 @@
+{
+  "articles": [
+    {
+      "articleId": "asana-001",
+      "title": "Tadasana (Mountain Pose) - Foundation of Standing Poses",
+      "content": "Tadasana, or Mountain Pose, is the foundational standing pose in yoga. Stand with feet together or hip-width apart, arms at sides with palms facing forward. Ground through all four corners of your feet, engage your thighs, lengthen your spine, and reach the crown of your head toward the ceiling. This pose improves posture, strengthens thighs, knees, and ankles, and increases awareness of body alignment. It's suitable for all levels and serves as the starting point for many standing sequences. Practice for 30 seconds to 1 minute, breathing deeply and evenly.",
+      "category": "asanas",
+      "tags": ["standing", "foundation", "beginner", "posture", "alignment"],
+      "source": "Traditional Hatha Yoga teachings",
+      "difficulty": "beginner",
+      "safetyNotes": "Generally safe for everyone. Those with low blood pressure should be mindful when transitioning."
+    },
+    {
+      "articleId": "asana-002",
+      "title": "Adho Mukha Svanasana (Downward-Facing Dog)",
+      "content": "Downward-Facing Dog is one of the most recognized yoga poses. Start on hands and knees, tuck toes, and lift hips up and back, forming an inverted V-shape. Hands are shoulder-width apart, feet hip-width apart. Press firmly through palms, rotate upper arms outward, and let head hang between arms. This pose stretches hamstrings, calves, and shoulders while strengthening arms and legs. It energizes the body, improves digestion, and relieves stress. Hold for 1-3 minutes with steady breathing. Modifications include bending knees or using blocks under hands.",
+      "category": "asanas",
+      "tags": ["inversion", "stretch", "strength", "energizing", "all-levels"],
+      "source": "Ashtanga Vinyasa tradition",
+      "difficulty": "beginner",
+      "safetyNotes": "Avoid with carpal tunnel syndrome, late-term pregnancy, high blood pressure, or eye conditions like glaucoma. Those with wrist issues can use fists or forearms."
+    },
+    {
+      "articleId": "asana-003",
+      "title": "Virabhadrasana I (Warrior I Pose)",
+      "content": "Warrior I is a powerful standing pose that builds strength and stamina. From Tadasana, step one foot back 3-4 feet, angle back foot 45-60 degrees. Bend front knee to 90 degrees, keeping knee over ankle. Square hips forward, raise arms overhead with palms facing each other or touching. Lift chest, draw shoulders down, and gaze forward or slightly up. This pose strengthens legs, opens hips and chest, improves focus and balance. Hold for 30 seconds to 1 minute each side. It builds mental determination and physical endurance.",
+      "category": "asanas",
+      "tags": ["standing", "strength", "hip opener", "intermediate", "warrior"],
+      "source": "Classical Yoga texts",
+      "difficulty": "intermediate",
+      "safetyNotes": "Those with heart problems should avoid raising arms overhead. Knee injuries require careful alignment. High blood pressure practitioners should not look up."
+    },
+    {
+      "articleId": "asana-004",
+      "title": "Virabhadrasana II (Warrior II Pose)",
+      "content": "Warrior II develops leg strength and hip flexibility. From standing, step feet wide apart (4-5 feet). Turn right foot out 90 degrees, left foot slightly in. Extend arms parallel to the floor, palms down. Bend right knee over right ankle, keeping torso upright between legs. Gaze over right fingertips. The pose strengthens and stretches legs and ankles, stretches groins, chest, and shoulders, improves stamina and concentration. Hold 30 seconds to 1 minute each side. Keep back leg strong and grounded throughout.",
+      "category": "asanas",
+      "tags": ["standing", "strength", "hip opener", "stamina", "warrior"],
+      "source": "Traditional Hatha Yoga",
+      "difficulty": "intermediate",
+      "safetyNotes": "Avoid with diarrhea or high blood pressure. Those with neck problems should not turn head but look straight ahead."
+    },
+    {
+      "articleId": "asana-005",
+      "title": "Trikonasana (Triangle Pose)",
+      "content": "Triangle Pose is a standing pose that stretches the entire body. Stand with feet 3-4 feet apart, right foot turned out 90 degrees, left foot slightly in. Extend arms parallel to floor. Reach right hand toward right foot while left arm extends upward. Place right hand on shin, ankle, or floor. Stack shoulders and open chest toward ceiling. Gaze at top hand. This pose stretches hips, groins, hamstrings, calves, shoulders, chest, and spine. It strengthens thighs, knees, and ankles and relieves stress. Hold 30 seconds to 1 minute each side.",
+      "category": "asanas",
+      "tags": ["standing", "stretch", "hip opener", "lateral stretch", "all-levels"],
+      "source": "Iyengar Yoga tradition",
+      "difficulty": "beginner",
+      "safetyNotes": "Those with low blood pressure, diarrhea, or headache should avoid. Neck problems require looking straight ahead instead of upward."
+    },
+    {
+      "articleId": "asana-006",
+      "title": "Vrksasana (Tree Pose)",
+      "content": "Tree Pose is a balancing pose that builds focus and stability. Stand in Tadasana, shift weight to left foot. Place right foot on inner left thigh, calf, or ankle (never on knee). Press foot and leg together. Bring hands to heart center or extend overhead. Fix gaze on a steady point (drishti). This pose strengthens thighs, calves, ankles, and spine while improving balance and concentration. It stretches groins and inner thighs and calms the mind. Hold 30 seconds to 1 minute each side. Practice near a wall if needed.",
+      "category": "asanas",
+      "tags": ["balance", "standing", "focus", "beginner", "grounding"],
+      "source": "Traditional Hatha Yoga",
+      "difficulty": "beginner",
+      "safetyNotes": "Those with insomnia or low blood pressure should take care. Use wall support if balance is challenging. Avoid placing foot on knee joint."
+    },
+    {
+      "articleId": "asana-007",
+      "title": "Uttanasana (Standing Forward Bend)",
+      "content": "Standing Forward Bend provides a deep stretch for the entire back body. From Tadasana, exhale and fold forward from hip joints (not waist). Bring fingertips or palms to floor beside feet, or hold elbows. Let head hang freely. Keep slight bend in knees if hamstrings are tight. This pose stretches hamstrings, calves, and hips, strengthens thighs and knees, calms the brain, and relieves stress, anxiety, and mild depression. It improves digestion and can help relieve headaches and insomnia. Hold 30 seconds to 1 minute.",
+      "category": "asanas",
+      "tags": ["forward fold", "stretch", "calming", "beginner", "inversion"],
+      "source": "Ashtanga Yoga tradition",
+      "difficulty": "beginner",
+      "safetyNotes": "Those with back injuries should do this pose with bent knees or perform Ardha Uttanasana (Half Forward Fold) with hands on wall. Avoid full pose with high blood pressure or glaucoma."
+    },
+    {
+      "articleId": "asana-008",
+      "title": "Balasana (Child's Pose)",
+      "content": "Child's Pose is a restful, grounding pose perfect for rest between challenging poses. Kneel on floor, touch big toes together, sit on heels, then separate knees hip-width or wider. Exhale and lay torso between thighs. Extend arms forward with palms down or alongside body with palms up. Rest forehead on floor or a block. This pose gently stretches hips, thighs, and ankles, calms the brain, and relieves stress and fatigue. It's therapeutic for back pain when done with head and torso supported. Stay for 30 seconds to several minutes.",
+      "category": "asanas",
+      "tags": ["restorative", "resting", "beginner", "calming", "gentle"],
+      "source": "Restorative Yoga practices",
+      "difficulty": "beginner",
+      "safetyNotes": "Avoid with diarrhea or knee injuries. Pregnant women should spread knees wide. Those with ankle issues can place a rolled blanket between calves and thighs."
+    },
+    {
+      "articleId": "asana-009",
+      "title": "Bhujangasana (Cobra Pose)",
+      "content": "Cobra Pose is a gentle backbend that strengthens the spine. Lie face down, legs extended, tops of feet on floor. Place hands under shoulders, elbows close to body. On inhale, straighten arms to lift chest off floor, keeping lower ribs on ground. Keep shoulders down, away from ears. Press tailbone toward pubis and lift pubis toward navel. Hold 15-30 seconds, breathing easily. This pose strengthens spine, stretches chest, lungs, shoulders, and abdomen, firms buttocks, and stimulates abdominal organs. It's therapeutic for stress and fatigue.",
+      "category": "asanas",
+      "tags": ["backbend", "chest opener", "spine strength", "beginner", "energizing"],
+      "source": "Hatha Yoga Pradipika",
+      "difficulty": "beginner",
+      "safetyNotes": "Avoid during pregnancy, with back injuries, carpal tunnel syndrome, or headache. Those with neck issues should keep gaze downward."
+    },
+    {
+      "articleId": "asana-010",
+      "title": "Setu Bandhasana (Bridge Pose)",
+      "content": "Bridge Pose is a rejuvenating backbend accessible to beginners. Lie on back, bend knees, feet flat on floor hip-width apart. Arms alongside body, palms down. On exhale, press feet into floor, lift hips toward ceiling. Clasp hands under body and walk shoulders underneath. Keep thighs parallel, knees over ankles. Chin away from sternum, but don't flatten neck. Hold 30 seconds to 1 minute. This pose stretches chest, neck, spine, and hips, strengthens back, glutes, and hamstrings, calms brain, and reduces anxiety, fatigue, and insomnia.",
+      "category": "asanas",
+      "tags": ["backbend", "hip opener", "chest opener", "beginner", "rejuvenating"],
+      "source": "Iyengar Yoga methodology",
+      "difficulty": "beginner",
+      "safetyNotes": "Avoid with neck injuries unless supervised. Those with shoulder problems should keep arms at sides instead of clasping."
+    },
+    {
+      "articleId": "asana-011",
+      "title": "Sirsasana (Headstand) - King of Asanas",
+      "content": "Headstand is an advanced inversion often called the king of yoga poses. Interlock fingers, place forearms on floor with elbows shoulder-width apart. Place crown of head on floor, cupping back of head with hands. Lift knees off floor, walk feet toward elbows. Engage core, lift legs overhead one at a time or together. Press forearms down, keep shoulders lifted away from ears. Hold 30 seconds to 5 minutes with practice. Benefits include improved circulation, strengthened core and shoulders, increased focus, and calmed nervous system.",
+      "category": "asanas",
+      "tags": ["inversion", "advanced", "strength", "focus", "energizing"],
+      "source": "Traditional Yoga texts and Iyengar methodology",
+      "difficulty": "advanced",
+      "safetyNotes": "AVOID with neck or back injuries, heart conditions, high blood pressure, glaucoma, menstruation, pregnancy, or if beginner. Learn only under qualified teacher supervision. Never jump into pose."
+    },
+    {
+      "articleId": "asana-012",
+      "title": "Sarvangasana (Shoulderstand) - Queen of Asanas",
+      "content": "Shoulderstand is called the queen of asanas due to its many benefits. Lie on back, lift legs overhead, bringing hips off floor. Support lower back with hands, elbows on floor. Extend legs toward ceiling, body weight on shoulders (not neck). Keep chin toward chest, but don't flatten neck. Hold 30 seconds to 5 minutes with practice. Benefits include thyroid stimulation, improved circulation, calmed nerves, reduced fatigue and insomnia. It stretches shoulders and neck and tones legs and buttocks.",
+      "category": "asanas",
+      "tags": ["inversion", "advanced", "thyroid", "calming", "circulation"],
+      "source": "Hatha Yoga Pradipika, Iyengar Yoga",
+      "difficulty": "advanced",
+      "safetyNotes": "AVOID with neck injuries, high blood pressure, heart conditions, glaucoma, menstruation, or pregnancy. Use blankets under shoulders for neck protection. Learn under supervision only."
+    },
+    {
+      "articleId": "asana-013",
+      "title": "Savasana (Corpse Pose) - Final Relaxation",
+      "content": "Savasana is the most important pose for complete relaxation and integration. Lie flat on back, legs extended and slightly apart, arms at sides with palms up. Close eyes, relax every muscle. Let breath be natural. Scan body from toes to head, releasing tension. Stay 5-15 minutes or longer. This pose calms the brain, relieves stress and mild depression, relaxes the body, reduces headache, fatigue, and insomnia, and helps lower blood pressure. It allows the body to absorb the benefits of the practice.",
+      "category": "asanas",
+      "tags": ["relaxation", "restorative", "beginner", "stress relief", "integration"],
+      "source": "All yoga traditions",
+      "difficulty": "beginner",
+      "safetyNotes": "Generally safe for everyone. Those with lower back discomfort can place a bolster under knees. Pregnant women after first trimester should lie on left side instead."
+    },
+    {
+      "articleId": "asana-014",
+      "title": "Paschimottanasana (Seated Forward Bend)",
+      "content": "Seated Forward Bend provides a deep stretch for the entire back body. Sit with legs extended, feet flexed. Inhale, lengthen spine. Exhale, fold forward from hips, reaching for feet, ankles, or shins. Keep spine long rather than rounding excessively. Use a strap around feet if needed. Hold 1-3 minutes. Benefits include stretching spine, shoulders, and hamstrings, calming the brain, relieving stress and mild depression, improving digestion, and reducing anxiety and fatigue. It's therapeutic for high blood pressure, infertility, and sinusitis.",
+      "category": "asanas",
+      "tags": ["forward fold", "seated", "stretch", "calming", "intermediate"],
+      "source": "Classical Hatha Yoga",
+      "difficulty": "intermediate",
+      "safetyNotes": "Avoid with back injuries or diarrhea. Those with tight hamstrings should bend knees or use props. Pregnant women should take legs wide and fold gently."
+    },
+    {
+      "articleId": "asana-015",
+      "title": "Ardha Matsyendrasana (Half Lord of the Fishes Pose)",
+      "content": "This seated twist energizes the spine and stimulates digestion. Sit with legs extended. Bend right knee, place right foot outside left thigh. Bend left knee, bring left foot near right hip. Twist right, placing left elbow outside right knee. Right hand behind for support. Lengthen spine on inhale, deepen twist on exhale. Hold 30-60 seconds each side. Benefits include stretching shoulders, hips, and neck, energizing spine, stimulating digestive fire, relieving menstrual discomfort and fatigue, and therapeutic for sciatica.",
+      "category": "asanas",
+      "tags": ["twist", "seated", "spine", "digestion", "intermediate"],
+      "source": "Hatha Yoga Pradipika",
+      "difficulty": "intermediate",
+      "safetyNotes": "Avoid with spine or back injuries. Pregnant women should practice gentle open twists only. Those with digestive issues should practice on empty stomach."
+    },
+    {
+      "articleId": "pranayama-001",
+      "title": "Ujjayi Pranayama (Victorious Breath)",
+      "content": "Ujjayi is called the victorious or ocean breath due to its sound. Slightly constrict the back of throat to create a soft hissing or ocean-like sound while breathing through the nose. Inhale and exhale should be equal in length. The breath should be smooth, long, and controlled. Practice for 5-15 minutes. Benefits include calming the mind, focusing attention, regulating blood pressure, building internal heat, and enhancing meditation. It's commonly used during asana practice to maintain concentration and regulate body temperature.",
+      "category": "pranayama",
+      "tags": ["breathing", "calming", "focus", "beginner", "heat-building"],
+      "source": "Hatha Yoga Pradipika, Ashtanga tradition",
+      "difficulty": "beginner",
+      "safetyNotes": "Generally safe. Those with breathing difficulties should practice gently. If dizziness occurs, return to normal breathing."
+    },
+    {
+      "articleId": "pranayama-002",
+      "title": "Nadi Shodhana (Alternate Nostril Breathing)",
+      "content": "Nadi Shodhana purifies the energy channels and balances the nervous system. Sit comfortably with spine erect. Use right thumb to close right nostril. Inhale through left nostril. Close left nostril with ring finger, release right, exhale through right. Inhale through right, close right, exhale through left. This is one round. Practice 5-10 rounds. Benefits include balancing left and right brain hemispheres, reducing stress and anxiety, calming the mind, improving focus, purifying nadis (energy channels), and preparing for meditation.",
+      "category": "pranayama",
+      "tags": ["breathing", "balancing", "calming", "stress relief", "all-levels"],
+      "source": "Hatha Yoga Pradipika, Ayurvedic tradition",
+      "difficulty": "beginner",
+      "safetyNotes": "Safe for most people. Those with high blood pressure or heart conditions should practice without breath retention. Never force or strain the breath."
+    },
+    {
+      "articleId": "pranayama-003",
+      "title": "Kapalabhati (Skull Shining Breath)",
+      "content": "Kapalabhati is a cleansing technique featuring short, powerful exhales. Sit comfortably with spine erect. Inhale naturally, then exhale sharply through nose by contracting abdominal muscles. Inhale is passive. Start with 30 breaths, rest, repeat 2-3 rounds. Benefits include cleansing respiratory system, energizing body and mind, improving focus, strengthening abdominal muscles, stimulating digestive organs, and clearing sinuses. It generates heat and prepares mind for meditation.",
+      "category": "pranayama",
+      "tags": ["breathing", "cleansing", "energizing", "intermediate", "heating"],
+      "source": "Hatha Yoga Pradipika (Shatkarma)",
+      "difficulty": "intermediate",
+      "safetyNotes": "AVOID with high blood pressure, heart disease, stroke history, epilepsy, hernia, gastric ulcer, pregnancy, menstruation, or recent abdominal surgery. Practice on empty stomach only."
+    },
+    {
+      "articleId": "pranayama-004",
+      "title": "Bhramari (Bee Breath)",
+      "content": "Bhramari produces a humming sound like a bee, inducing deep calm. Sit comfortably, close eyes. Gently close ears with thumbs, place fingers over eyes and forehead. Inhale deeply through nose. Exhale while making low-pitched humming sound like a bee. Feel vibration in head and face. Practice 5-10 rounds. Benefits include immediate calming of the mind, reducing anger and anxiety, lowering blood pressure, relieving tension headache, improving concentration, and beneficial for insomnia. It's excellent preparation for meditation.",
+      "category": "pranayama",
+      "tags": ["breathing", "calming", "stress relief", "beginner", "relaxing"],
+      "source": "Hatha Yoga Pradipika",
+      "difficulty": "beginner",
+      "safetyNotes": "Generally very safe. Those with ear infections should avoid pressing on ears. Practice gently to avoid straining voice."
+    },
+    {
+      "articleId": "pranayama-005",
+      "title": "Dirga Pranayama (Three-Part Breath)",
+      "content": "Three-Part Breath is a foundational breathing practice teaching full yogic breathing. Lie down or sit comfortably. First, breathe into belly, feeling it rise. Then, continue breath into ribcage, feeling it expand. Finally, breathe into upper chest. Exhale in reverse: upper chest, ribs, belly. Practice 5-10 minutes. Benefits include maximizing oxygen intake, calming nervous system, reducing stress, improving lung capacity, grounding awareness in body, and excellent for beginners learning breath awareness.",
+      "category": "pranayama",
+      "tags": ["breathing", "foundational", "beginner", "calming", "awareness"],
+      "source": "Traditional Yoga instruction",
+      "difficulty": "beginner",
+      "safetyNotes": "Safe for everyone. Practice gently without forcing. If feeling lightheaded, return to natural breathing."
+    },
+    {
+      "articleId": "benefits-001",
+      "title": "Physical Benefits of Regular Yoga Practice",
+      "content": "Regular yoga practice provides numerous physical benefits. Improved flexibility comes gradually as muscles lengthen and joints gain range of motion. Strength builds through holding poses, particularly in arms, legs, core, and back. Balance improves through standing and one-legged poses. Posture corrects as body awareness increases and core strengthens. Yoga supports joint health by moving joints through full range of motion, stimulating synovial fluid. It can help manage chronic pain, particularly in the lower back and neck. Improved breathing through pranayama enhances lung function and oxygen delivery.",
+      "category": "benefits",
+      "tags": ["physical health", "flexibility", "strength", "balance", "posture"],
+      "source": "Various yoga research studies",
+      "difficulty": "all-levels",
+      "safetyNotes": "Progress gradually to prevent injury. Listen to your body and modify poses as needed."
+    },
+    {
+      "articleId": "benefits-002",
+      "title": "Mental and Emotional Benefits of Yoga",
+      "content": "Yoga profoundly impacts mental and emotional wellbeing. Stress reduction occurs through activation of the parasympathetic nervous system during practice. Regular practice decreases cortisol levels and reduces anxiety symptoms. Many practitioners report improved mood and reduced depression symptoms. Focus and concentration improve through sustained attention in poses and meditation. Body awareness increases, helping practitioners recognize and respond to stress signals. Sleep quality often improves with regular practice. Yoga philosophy encourages self-acceptance and compassion, supporting emotional resilience and psychological flexibility.",
+      "category": "benefits",
+      "tags": ["mental health", "stress relief", "anxiety", "focus", "emotional wellbeing"],
+      "source": "Research in Journal of Clinical Psychology and yoga studies",
+      "difficulty": "all-levels",
+      "safetyNotes": "Yoga complements but does not replace mental health treatment. Those with severe conditions should work with healthcare providers."
+    },
+    {
+      "articleId": "benefits-003",
+      "title": "Yoga for Stress Management",
+      "content": "Yoga is highly effective for stress management. The physical practice activates the relaxation response through slow, controlled movements and breathing. Pranayama directly influences the autonomic nervous system, shifting from fight-or-flight to rest-and-digest mode. Mindfulness cultivated in yoga helps break the cycle of worry and rumination. Recommended practices for stress include: gentle flows, restorative poses (Balasana, Savasana), forward folds, supported inversions like Legs-Up-The-Wall, Nadi Shodhana and Bhramari pranayama, and brief meditation after practice. Even 10-15 minutes daily can significantly reduce stress levels.",
+      "category": "benefits",
+      "tags": ["stress relief", "relaxation", "anxiety", "mental health", "daily practice"],
+      "source": "Stress management research and yoga therapy",
+      "difficulty": "all-levels",
+      "safetyNotes": "Gentle practices are generally safe. Those with anxiety should avoid intense heating practices initially."
+    },
+    {
+      "articleId": "contra-001",
+      "title": "Contraindications for Inversions",
+      "content": "Inversions (Headstand, Shoulderstand, Handstand) have several contraindications. Avoid inversions with: high blood pressure (increases pressure in head and eyes), glaucoma or detached retina (increased intraocular pressure), heart conditions, neck or cervical spine injuries, stroke history, during menstruation (traditional guidance, though debated), pregnancy (especially without prior experience), vertigo or inner ear conditions, hiatal hernia, and recent surgery. Even without contraindications, inversions should be learned gradually under qualified supervision. Alternative poses like Viparita Karani (Legs-Up-The-Wall) provide similar benefits with less risk.",
+      "category": "contraindications",
+      "tags": ["inversions", "safety", "precautions", "medical conditions", "warnings"],
+      "source": "Yoga therapy guidelines and medical research",
+      "difficulty": "all-levels",
+      "safetyNotes": "When in doubt, consult a healthcare provider before attempting inversions."
+    },
+    {
+      "articleId": "contra-002",
+      "title": "Yoga Modifications for Pregnancy",
+      "content": "Pregnancy requires significant yoga modifications, especially after the first trimester. Avoid: closed twists (compress abdomen), deep backbends, inversions, lying flat on back (after first trimester), poses on belly, hot yoga, breath retention, and overheating. Recommended modifications: take feet wide in forward folds, practice open twists only, use props liberally, lie on left side for relaxation, avoid overstretching (relaxin hormone increases joint laxity). Safe practices include: gentle prenatal classes, Cat-Cow, supported Goddess pose, side-lying rest, gentle hip openers, and breathing practices (avoid Kapalabhati). Always inform instructors of pregnancy.",
+      "category": "contraindications",
+      "tags": ["pregnancy", "prenatal", "modifications", "safety", "precautions"],
+      "source": "Prenatal yoga guidelines, obstetric recommendations",
+      "difficulty": "all-levels",
+      "safetyNotes": "Pregnant practitioners should attend prenatal-specific classes and consult healthcare providers about appropriate exercise."
+    },
+    {
+      "articleId": "contra-003",
+      "title": "Yoga Considerations for High Blood Pressure",
+      "content": "High blood pressure requires specific yoga modifications. Avoid: inversions (increase pressure in head), breath retention, Kapalabhati, poses with arms overhead for extended periods, and intense vinyasa or heating practices. Modify: keep head above heart level, avoid rapid transitions, practice in cool environment, include longer rest periods. Beneficial practices include: Savasana (with head slightly elevated), gentle forward folds, Legs-Up-The-Wall with head on same level as heart, slow breathing practices especially extended exhale, gentle Nadi Shodhana without retention, and meditation. Yoga can help manage blood pressure long-term but requires appropriate practice selection.",
+      "category": "contraindications",
+      "tags": ["blood pressure", "hypertension", "modifications", "safety", "heart health"],
+      "source": "Yoga therapy for cardiovascular conditions",
+      "difficulty": "all-levels",
+      "safetyNotes": "Those with high blood pressure should practice under guidance and in coordination with their healthcare provider."
+    },
+    {
+      "articleId": "contra-004",
+      "title": "Back Pain and Spinal Issues in Yoga",
+      "content": "Yoga can help or harm back pain depending on approach. For herniated disc, sciatica, or acute back pain: avoid deep forward folds, extreme backbends, and twists that rotate spine. Helpful modifications include: keep knees bent in forward folds, practice gentle Cat-Cow for spinal mobility, use props extensively, strengthen core gently, practice reclined poses. For general back care: maintain neutral spine, engage core before movement, avoid rounding lower back in folds, practice hip openers to reduce back strain. Avoid: Plow pose, deep twists, unsupported backbends. Always move mindfully and stop at any sharp or radiating pain.",
+      "category": "contraindications",
+      "tags": ["back pain", "spine", "sciatica", "modifications", "safety"],
+      "source": "Physical therapy and yoga therapy guidelines",
+      "difficulty": "all-levels",
+      "safetyNotes": "Those with spinal conditions should consult healthcare providers and work with experienced yoga therapists."
+    },
+    {
+      "articleId": "beginner-001",
+      "title": "Starting Your Yoga Journey - Beginner's Guide",
+      "content": "Starting yoga can feel intimidating, but everyone begins somewhere. Tips for beginners: Start with a beginner-friendly class or video. Communicate any injuries or conditions to instructors. Use props (blocks, straps, blankets) without hesitation - they enhance practice, not limit it. Focus on breath rather than achieving perfect poses. Don't compare yourself to others. Expect some soreness initially but never sharp pain. Wear comfortable, stretchy clothing. Practice on an empty stomach (2-3 hours after eating). Commit to regular practice - even 15 minutes daily beats occasional long sessions. Be patient; flexibility and strength build gradually over months and years.",
+      "category": "beginner",
+      "tags": ["beginner", "getting started", "tips", "introduction", "basics"],
+      "source": "Yoga instructor guidelines for beginners",
+      "difficulty": "beginner",
+      "safetyNotes": "Begin gently and progress slowly. Inform instructors of any health conditions."
+    },
+    {
+      "articleId": "beginner-002",
+      "title": "Essential Poses for Beginners",
+      "content": "Foundational poses every beginner should learn: Tadasana (Mountain) - teaches alignment and grounding. Cat-Cow - warms spine and teaches breath-movement connection. Downward Dog - builds strength and flexibility. Warrior I and II - build leg strength and stamina. Child's Pose - resting pose for any time. Triangle - stretches entire body. Tree Pose - introduces balance. Bridge - accessible backbend. Savasana - essential relaxation. Practice these regularly before moving to more complex poses. Master alignment and breath connection in these basics. They form the foundation for all future practice and contain the essence of yoga's physical benefits.",
+      "category": "beginner",
+      "tags": ["beginner", "essential poses", "foundation", "basics", "learning"],
+      "source": "Traditional yoga pedagogy",
+      "difficulty": "beginner",
+      "safetyNotes": "Focus on alignment and sensation rather than depth. Use props as needed."
+    },
+    {
+      "articleId": "advanced-001",
+      "title": "Arm Balances - Building Strength and Focus",
+      "content": "Arm balances require strength, focus, and patience. Key poses include: Bakasana (Crow/Crane) - the gateway arm balance, Parsva Bakasana (Side Crow), Astavakrasana (Eight-Angle Pose), and Mayurasana (Peacock). Prerequisites: strong wrists, core strength, shoulder stability, and mental focus. Preparation includes: plank holds, chaturanga practice, core work, wrist stretches and strengthening. Tips: shift weight forward gradually, use gaze point for balance, engage core strongly, don't rush the process. Practice on padded surface initially. These poses build profound concentration, strengthen entire upper body, and develop mental resilience through facing fear of falling.",
+      "category": "advanced",
+      "tags": ["arm balance", "strength", "advanced", "focus", "challenging"],
+      "source": "Advanced asana practice traditions",
+      "difficulty": "advanced",
+      "safetyNotes": "Build foundation with preparatory poses. Protect wrists with proper warm-up. Learn under supervision to prevent injury."
+    },
+    {
+      "articleId": "advanced-002",
+      "title": "Deep Backbends - Opening the Heart",
+      "content": "Advanced backbends include Urdhva Dhanurasana (Wheel/Upward Bow), Kapotasana (King Pigeon), Natarajasana (Dancer), and Eka Pada Rajakapotasana (One-Legged King Pigeon). These poses require: open shoulders, hip flexors, and thoracic spine; strong legs and arms; proper warm-up sequence. Benefits include: heart opening (physically and emotionally), increased energy, improved spine flexibility, and expanded breath capacity. Preparation: thorough warm-up with lunges, gentle backbends (Cobra, Bridge), shoulder openers. Practice: engage legs strongly, distribute curve throughout spine (not just lower back), breathe fully. These poses can bring emotional release as we open guarded areas.",
+      "category": "advanced",
+      "tags": ["backbend", "heart opener", "advanced", "flexibility", "challenging"],
+      "source": "Advanced Hatha and Ashtanga traditions",
+      "difficulty": "advanced",
+      "safetyNotes": "Never force backbends. Warm up thoroughly. Those with lower back issues should proceed very carefully and use modifications."
+    },
+    {
+      "articleId": "general-001",
+      "title": "Understanding the Eight Limbs of Yoga",
+      "content": "Patanjali's Yoga Sutras describe eight limbs of yoga, offering a complete path. The Yamas (ethical restraints): non-violence, truthfulness, non-stealing, moderation, non-possessiveness. The Niyamas (personal observances): cleanliness, contentment, discipline, self-study, surrender. Asana: physical postures - just one limb! Pranayama: breath control and expansion of life force. Pratyahara: sense withdrawal, turning attention inward. Dharana: concentration on a single point. Dhyana: meditation, sustained focus without interruption. Samadhi: absorption, union, enlightenment. This framework shows yoga as far more than physical exercise - it's a complete system for living and spiritual development.",
+      "category": "general",
+      "tags": ["philosophy", "eight limbs", "patanjali", "yoga sutras", "lifestyle"],
+      "source": "Yoga Sutras of Patanjali",
+      "difficulty": "all-levels",
+      "safetyNotes": "Approach philosophical study with openness and integrate teachings gradually."
+    },
+    {
+      "articleId": "general-002",
+      "title": "Creating a Home Yoga Practice",
+      "content": "A home practice deepens yoga experience between classes. Tips for success: Designate a consistent practice space, even small. Keep equipment accessible (mat, blocks, strap). Practice at the same time daily to build habit - morning or evening work well. Start short (15-20 minutes) and build gradually. Structure practice with: centering (seated breathing), warm-up (Cat-Cow, gentle stretches), standing poses, balance, seated poses, backbends, cooldown, Savasana. Use videos or sequences for guidance initially. Reduce distractions (phone off, door closed). Modify for how you feel each day - honor energy levels. Track practice to build accountability and notice progress.",
+      "category": "general",
+      "tags": ["home practice", "routine", "tips", "self-practice", "habits"],
+      "source": "Yoga teaching methodology",
+      "difficulty": "all-levels",
+      "safetyNotes": "Without a teacher present, practice conservatively and avoid poses you're unsure about."
+    },
+    {
+      "articleId": "general-003",
+      "title": "Different Styles of Yoga Explained",
+      "content": "Major yoga styles include: Hatha - general term for physical yoga; slower pace, foundational. Vinyasa/Flow - dynamic, linking movement with breath, varied sequences. Ashtanga - set sequence, vigorous, traditionally self-practice. Iyengar - precision alignment, extensive prop use, therapeutic. Bikram/Hot - 26 poses in heated room (105°F). Yin - passive holds (3-5 minutes), targets connective tissue. Restorative - fully supported poses, deep relaxation. Kundalini - combines poses, breathwork, chanting, meditation. Power - fitness-oriented, strength-building. Choosing a style depends on goals: relaxation (Restorative, Yin), fitness (Vinyasa, Power), precision (Iyengar), spiritual practice (Kundalini, Ashtanga).",
+      "category": "general",
+      "tags": ["yoga styles", "types", "hatha", "vinyasa", "overview"],
+      "source": "Yoga Alliance and traditional lineages",
+      "difficulty": "all-levels",
+      "safetyNotes": "Try different styles to find what suits you. Consider health conditions when choosing style intensity."
+    }
+  ]
+}

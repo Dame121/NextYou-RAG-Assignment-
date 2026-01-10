@@ -24,3 +24,24 @@ Thumbs.db
 # Build outputs
 dist/
 build/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.env
+.venv
+env/
+venv/
+ENV/
+.eggs/
+*.egg-info/
+*.egg
+
+# Vector store data (regenerated on init)
+backend/data/
+
+# Streamlit
+.streamlit/
