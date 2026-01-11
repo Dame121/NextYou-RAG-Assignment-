@@ -128,11 +128,11 @@ ${safetyCheck.safetyResponse.disclaimer}`;
     const queryLog = new QueryLog({
       userQuery: query,
       retrievedChunks: retrievedChunks.map(chunk => ({
-        chunkId: chunk.id,
+        chunkId: chunk.chunkId,
         title: chunk.title,
         content: chunk.content.substring(0, 500),
         source: chunk.category,
-        similarityScore: chunk.similarity
+        similarityScore: chunk.similarityScore
       })),
       aiAnswer,
       isUnsafe: safetyCheck.isUnsafe,

@@ -127,6 +127,36 @@ const retrieveChunks = async (query, topK = 5) => {
 };
 
 /**
+ * Retrieve context with formatted sources for user display
+ * @param {string} query - User query
+ * @param {number} topK - Number of chunks to retrieve
+ * @returns {Object} - Object containing chunks, context string, and formatted sources array
+ */
+const retrieveContext = async (query, topK = 5) => {
+  // Retrieve chunks
+  const chunks = await retrieveChunks(query, topK);
+  
+  // Build context string for LLM
+  const context = buildContext(chunks);
+  
+  // Format sources for user display
+  const sources = chunks.map((chunk, index) => ({
+    id: index + 1,
+    title: chunk.title,
+    chunkId: chunk.chunkId,
+    category: chunk.category,
+    source: chunk.source,
+    relevance: Math.round(chunk.similarityScore * 100)
+  }));
+  
+  return {
+    chunks,
+    context,
+    sources
+  };
+};
+
+/**
  * Build context string from retrieved chunks
  * @param {Object[]} chunks - Retrieved chunks
  * @returns {string} - Formatted context
@@ -202,6 +232,7 @@ const getRAGStatus = () => {
 module.exports = {
   initializeRAG,
   retrieveChunks,
+  retrieveContext,
   buildContext,
   buildRAGPrompt,
   getRAGStatus,

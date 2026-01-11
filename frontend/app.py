@@ -576,12 +576,12 @@ def ask_question(query: str) -> dict:
     except Exception as e:
         return {"success": False, "error": str(e)}
 
-def submit_feedback(query_id: str, rating: str, comment: str = "") -> dict:
+def submit_feedback(query_id: str, is_helpful: bool, comment: str = "") -> dict:
     """Submit feedback for a response"""
     try:
         response = requests.post(
             f"{API_BASE_URL}/feedback",
-            json={"queryId": query_id, "rating": rating, "comment": comment},
+            json={"queryId": query_id, "isHelpful": is_helpful, "comment": comment},
             timeout=10
         )
         response.raise_for_status()
@@ -654,17 +654,19 @@ def render_sources(sources: list):
     st.markdown('<div class="sources-card">', unsafe_allow_html=True)
     st.markdown('<p class="sources-header">📚 Sources Used</p>', unsafe_allow_html=True)
     
-    for i, source in enumerate(sources, 1):
+    for source in sources:
+        source_id = source.get('id', 1)
         title = source.get('title', 'Unknown Source')
         category = source.get('category', 'General')
-        similarity = source.get('similarity', 0)
+        chunk_id = source.get('chunkId', '')
+        relevance = source.get('relevance', 0)
         
         st.markdown(f"""
         <div class="source-item">
-            <span class="source-title">Source {i}: {title}</span>
+            <span class="source-title">Source {source_id}: {title}</span>
             <div class="source-meta">
                 Category: {category} &nbsp;|&nbsp; 
-                <span class="relevance-badge">{similarity:.0%} relevant</span>
+                <span class="relevance-badge">{relevance}% relevant</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -703,10 +705,9 @@ def render_assistant_message(content: str, metadata: dict):
     # Main answer
     st.markdown(content)
     
-    # Sources section
+    # Sources section - display prominently
     if sources:
-        with st.expander("📚 View Sources Used", expanded=False):
-            render_sources(sources)
+        render_sources(sources)
     
     # Response time
     if response_time:
@@ -726,25 +727,18 @@ def render_feedback_section(query_id: str, message_index: int):
         st.markdown('<p class="feedback-success">✅ Thanks for your feedback!</p>', unsafe_allow_html=True)
         return
     
-    col1, col2, col3, col4 = st.columns([1, 1, 1, 3])
+    col1, col2, col3 = st.columns([1, 1, 3])
     
     with col1:
         if st.button("👍 Helpful", key=f"helpful_{feedback_key}", use_container_width=True):
-            result = submit_feedback(query_id, "helpful")
+            result = submit_feedback(query_id, True)
             if result.get('success'):
                 st.session_state.feedback_given.add(feedback_key)
                 st.rerun()
     
     with col2:
         if st.button("👎 Not Helpful", key=f"not_helpful_{feedback_key}", use_container_width=True):
-            result = submit_feedback(query_id, "not_helpful")
-            if result.get('success'):
-                st.session_state.feedback_given.add(feedback_key)
-                st.rerun()
-    
-    with col3:
-        if st.button("😐 Neutral", key=f"neutral_{feedback_key}", use_container_width=True):
-            result = submit_feedback(query_id, "neutral")
+            result = submit_feedback(query_id, False)
             if result.get('success'):
                 st.session_state.feedback_given.add(feedback_key)
                 st.rerun()
