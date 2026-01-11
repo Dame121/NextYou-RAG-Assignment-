@@ -1560,10 +1560,11 @@ Health check endpoint.
 
 ## 🎬 Demo Video
 
-### Location
-The demo video is located in the `/demo` folder of this repository.
+Watch the complete application demonstration:
 
-### Video Requirements Met
+https://github.com/user-attachments/assets/yoga-rag-demo.mp4
+
+### Demo Highlights
 - ✅ **Duration:** 2-5 minutes  
 - ✅ **Content Coverage:**
   - Application overview and features
@@ -1572,13 +1573,6 @@ The demo video is located in the `/demo` folder of this repository.
   - Feedback system functionality
   - Source attribution feature
   - MongoDB logging verification
-
-### How to View
-1. Navigate to `/demo` folder
-2. Open the video file (MP4 format)
-3. Watch the complete walkthrough
-
-**Note:** Demo video will be added soon. Place your recorded video in the `/demo` folder with the name `yoga-rag-demo.mp4`.
 
 ---
 
