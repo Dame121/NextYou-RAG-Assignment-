@@ -1573,215 +1573,82 @@ https://github.com/user-attachments/assets/edf534e1-1f97-4310-b290-439617a356fb
 
 ## 🤖 AI Tools & Prompts Used
 
-This project was developed with assistance from **GitHub Copilot** AI IDE tool. Below is a comprehensive list of all prompts used during development for proper evaluation.
+This project was built with assistance from **GitHub Copilot (Claude Opus 4.5)**. Below is a comprehensive list of all prompts used during development:
 
-### Initial Setup Prompts
+### Initial Setup & Ollama Integration
 
-1. **Project Initialization**
-   ```
-   Create a full-stack RAG application for yoga queries with Node.js backend and Python Streamlit frontend. Include MongoDB for data persistence.
-   ```
+1. **Prompt**: "here in this project i am building can you connect to the ollama model called yoga and also make it work use the ollama package"
+   - **Result**: Integrated Ollama client, configured yoga model connection, updated ask.service.js with generateOllamaResponse function
 
-2. **Backend Structure**
-   ```
-   Set up a Node.js Express backend with proper MVC structure: Controllers, Services, Models, Middleware. Include error handling.
-   ```
+2. **Prompt**: "can you test it"
+   - **Result**: Tested the API endpoint with curl, verified Ollama yoga model responds correctly
 
-3. **MongoDB Connection**
-   ```
-   Create MongoDB connection using Mongoose with error handling and environment variable support.
-   ```
+### Frontend Development
 
-### RAG Pipeline Prompts
+3. **Prompt**: "now create a simple UI using streamlit to test that backend"
+   - **Result**: Created Streamlit app with chat interface, session history, example questions sidebar, and feedback functionality
 
-4. **Knowledge Base**
-   ```
-   Create JSON structure for 34 yoga articles with title, content, category, tags, source, difficulty, and safety notes.
-   ```
+### RAG Pipeline Implementation
 
-5. **Chunking Service**
-   ```
-   Implement text chunking: ~500 chars, 50 char overlap, sentence-boundary aware, preserve metadata.
-   ```
+4. **Prompt**: "now since we're building this Track B – Wellness RAG Micro-App... i want you to implement the Rag design now by following the assessment given and also implement the backend properly"
+   - **Result**: Complete RAG implementation including:
+     - Knowledge base creation (34 yoga articles in JSON)
+     - Chunking service (500 chars, 50 overlap)
+     - Embedding service using Ollama nomic-embed-text
+     - Vector store with cosine similarity search
+     - RAG service for retrieval and prompt construction
+     - Updated ask.service.js with full RAG integration
+     - MongoDB schemas for QueryLog and Feedback
+     - API routes for /ask, /feedback, /rag/status
+     - Safety detection with keyword matching
+     - Source attribution in responses
 
-6. **Embedding Service**
-   ```
-   Connect to Ollama nomic-embed-text model. Generate 768-dim embeddings for single and batch texts.
-   ```
+### MongoDB Integration
 
-7. **Vector Store**
-   ```
-   Create in-memory vector store with cosine similarity search, top-K retrieval, save/load to JSON.
-   ```
+5. **Prompt**: "Initialize a MongoDB connection in the backend and create a collection to log RAG interactions. Each record should include the user prompt, retrieved context chunks, model-generated response, safety/moderation flags, and automatic timestamps."
+   - **Result**: Created QueryLog model with comprehensive logging, automatic timestamps, and indexes for performance
 
-8. **RAG Integration**
-   ```
-   Build RAG service: query embedding → similarity search → retrieve top-5 chunks → format context with sources.
-   ```
+### Safety System Implementation
 
-### Safety System Prompts
+6. **Prompt**: "Safety-Filtered Recommendations: Flag queries mentioning pregnancy, hernia, glaucoma, high blood pressure, recent surgery. Mark isUnsafe = true in MongoDB. Show red warning block in UI. Include: gentle safety message, safe modifications, professional consultation advice"
+   - **Result**: Implemented safety detection system with:
+     - Keyword-based detection across 10+ categories
+     - MongoDB logging with isUnsafe flag
+     - Red warning blocks in Streamlit UI
+     - Safety messages with gentle alternatives
+     - Professional consultation disclaimers
 
-9. **Safety Keywords**
-   ```
-   Create comprehensive safety keywords: pregnancy, medical conditions, age, mental health. Group by category.
-   ```
+### Project Cleanup
 
-10. **Safety Response**
-    ```
-    Generate structured safety responses: warning, safe alternatives, professional consultation disclaimer.
-    ```
+7. **Prompt**: "can you clean everything about this project structure before i push to github"
+   - **Result**: 
+     - Created comprehensive README.md with setup instructions
+     - Added backend/README.md, frontend/README.md, rag/README.md
+     - Created .env.example template
+     - Updated .gitignore for sensitive files
+     - Verified .env files are properly ignored
 
-11. **Safety-Aware LLM**
-    ```
-    Modify LLM prompt for unsafe queries: no medical advice, recommend professionals, suggest gentle alternatives.
-    ```
+### Documentation
 
-### LLM Integration Prompts
+8. **Prompt**: "give me a bit long proper commit message and also give me those prompts to do that you did to keep in readme later on"
+   - **Result**: Generated detailed commit message and comprehensive prompts documentation
 
-12. **Ollama Integration**
-    ```
-    Connect to Ollama via ollama package. Implement chat completion with system/user messages and error handling.
-    ```
 
-13. **Prompt Construction**
-    ```
-    Build prompts: yoga instructor persona, retrieved context with sources, safety instructions when needed.
-    ```
+---
 
-### Data Layer Prompts
+### Tools Used
+| Tool | Purpose |
+|------|---------|
+| GitHub Copilot | AI pair programming assistant |
+| Claude Opus 4.5 | LLM powering Copilot responses |
+| VS Code | Development environment |
+| Ollama | Local LLM hosting (yoga model + embeddings) |
 
-14. **QueryLog Model**
-    ```
-    Mongoose schema for queries: user query, retrieved chunks, AI answer, safety flags, response time, timestamps. Add indexes.
-    ```
-
-15. **Feedback Model**
-    ```
-    Mongoose schema for feedback: queryLogId reference, isHelpful boolean, comment, timestamps. One-to-one relationship.
-    ```
-
-16. **Analytics Queries**
-    ```
-    MongoDB aggregation pipelines: safety stats, top keywords, feedback summary, query history.
-    ```
-
-### API Development Prompts
-
-17. **Ask Endpoint**
-    ```
-    POST /api/ask: validate input, safety check, execute RAG, generate response, log to MongoDB, return with sources.
-    ```
-
-18. **Feedback Endpoint**
-    ```
-    POST /api/feedback: validate queryId, accept boolean isHelpful, handle updates, link to QueryLog.
-    ```
-
-19. **Analytics Endpoints**
-    ```
-    GET endpoints: /api/ask/history, /api/feedback/stats, /api/ask/safety-stats with aggregation.
-    ```
-
-### Frontend Prompts
-
-20. **Streamlit UI**
-    ```
-    ChatGPT-style Streamlit interface: custom CSS, query input, loading spinner, markdown response, sources section, feedback buttons.
-    ```
-
-21. **Safety Display**
-    ```
-    When unsafe: red badge, yellow warning box, amber alternatives, blue disclaimer. Use HTML/CSS styling.
-    ```
-
-22. **Source Attribution**
-    ```
-    Display sources in cards: number, title, category, relevance percentage. Visual styling with hover effects.
-    ```
-
-23. **Feedback Integration**
-    ```
-    Implement feedback: POST to /api/feedback, pass queryId, show confirmation, prevent duplicates.
-    ```
-
-### DevOps Prompts
-
-24. **Environment Config**
-    ```
-    Create .env.example with PORT, MongoDB URI, Ollama host/models, RAG parameters. Include comments.
-    ```
-
-25. **Start Scripts**
-    ```
-    PowerShell/Batch scripts: check prerequisites, start backend, start frontend, handle errors. Also stop scripts.
-    ```
-
-26. **RAG Init Script**
-    ```
-    Initialize RAG: load articles, chunk, generate embeddings, build vector index, save, show progress.
-    ```
-
-### Error Handling Prompts
-
-27. **Error Middleware**
-    ```
-    Express error handler: catch all errors, format responses, appropriate status codes, hide sensitive info in production.
-    ```
-
-28. **Async Wrapper**
-    ```
-    Async handler wrapper: wrap async routes, catch rejections, pass to error middleware, reduce try-catch.
-    ```
-
-### Documentation Prompts
-
-29. **API Documentation**
-    ```
-    Document endpoints: method, path, request schema, response format, examples, status codes. Clear formatting.
-    ```
-
-30. **README Enhancement**
-    ```
-    Comprehensive README: overview, setup, RAG architecture, safety logic, data models, API docs, troubleshooting.
-    ```
-
-### Testing Prompts
-
-31. **Query Testing**
-    ```
-    Test queries: safe (normal), unsafe (pregnancy/medical), edge cases (empty/long/special chars). Verify RAG and safety.
-    ```
-
-32. **Bug Fixes**
-    ```
-    Fix feedback: frontend sending 'rating' string, backend expects 'isHelpful' boolean. Update API call and handlers.
-    ```
-
-33. **Source Attribution Feature**
-    ```
-    Add sources: format array with ID/title/category/relevance, display prominently, show which articles used. Format as 'Source 1: {title}'.
-    ```
-
-### Performance Prompts
-
-34. **Optimization**
-    ```
-    Optimize RAG: batch embeddings during init, in-memory vector store, minimize MongoDB trips, track response times. Target: <3 seconds.
-    ```
-
-35. **Code Cleanup**
-    ```
-    Clean for GitHub: remove unnecessary files, verify .gitignore, ensure .env not tracked, remove TODOs, verify imports.
-    ```
-
-### Total Prompts Used: 35+
-
-**AI Assistance Summary:**
-- **Primary Tool:** GitHub Copilot
-- **Usage:** Code generation, refactoring, documentation
-- **Percentage:** Approximately 60-70% of code generated with AI assistance
-- **Human Review:** All AI-generated code was reviewed, tested, and modified as needed
-- **Approach:** Iterative prompting with continuous refinement
+### Development Approach
+- Iterative development with AI assistance
+- Each major feature implemented through conversational prompts
+- Testing performed after each implementation step
+- Documentation generated alongside code
 
 ---
 
