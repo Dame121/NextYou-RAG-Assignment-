@@ -1578,60 +1578,32 @@ This project was built with assistance from **GitHub Copilot (Claude Opus 4.5)**
 ### Initial Setup & Ollama Integration
 
 1. **Prompt**: "here in this project i am building can you connect to the ollama model called yoga and also make it work use the ollama package"
-   - **Result**: Integrated Ollama client, configured yoga model connection, updated ask.service.js with generateOllamaResponse function
 
 2. **Prompt**: "can you test it"
-   - **Result**: Tested the API endpoint with curl, verified Ollama yoga model responds correctly
 
 ### Frontend Development
 
 3. **Prompt**: "now create a simple UI using streamlit to test that backend"
-   - **Result**: Created Streamlit app with chat interface, session history, example questions sidebar, and feedback functionality
 
 ### RAG Pipeline Implementation
 
 4. **Prompt**: "now since we're building this Track B – Wellness RAG Micro-App... i want you to implement the Rag design now by following the assessment given and also implement the backend properly"
-   - **Result**: Complete RAG implementation including:
-     - Knowledge base creation (34 yoga articles in JSON)
-     - Chunking service (500 chars, 50 overlap)
-     - Embedding service using Ollama nomic-embed-text
-     - Vector store with cosine similarity search
-     - RAG service for retrieval and prompt construction
-     - Updated ask.service.js with full RAG integration
-     - MongoDB schemas for QueryLog and Feedback
-     - API routes for /ask, /feedback, /rag/status
-     - Safety detection with keyword matching
-     - Source attribution in responses
 
 ### MongoDB Integration
 
 5. **Prompt**: "Initialize a MongoDB connection in the backend and create a collection to log RAG interactions. Each record should include the user prompt, retrieved context chunks, model-generated response, safety/moderation flags, and automatic timestamps."
-   - **Result**: Created QueryLog model with comprehensive logging, automatic timestamps, and indexes for performance
 
 ### Safety System Implementation
 
 6. **Prompt**: "Safety-Filtered Recommendations: Flag queries mentioning pregnancy, hernia, glaucoma, high blood pressure, recent surgery. Mark isUnsafe = true in MongoDB. Show red warning block in UI. Include: gentle safety message, safe modifications, professional consultation advice"
-   - **Result**: Implemented safety detection system with:
-     - Keyword-based detection across 10+ categories
-     - MongoDB logging with isUnsafe flag
-     - Red warning blocks in Streamlit UI
-     - Safety messages with gentle alternatives
-     - Professional consultation disclaimers
 
 ### Project Cleanup
 
 7. **Prompt**: "can you clean everything about this project structure before i push to github"
-   - **Result**: 
-     - Created comprehensive README.md with setup instructions
-     - Added backend/README.md, frontend/README.md, rag/README.md
-     - Created .env.example template
-     - Updated .gitignore for sensitive files
-     - Verified .env files are properly ignored
 
 ### Documentation
 
 8. **Prompt**: "give me a bit long proper commit message and also give me those prompts to do that you did to keep in readme later on"
-   - **Result**: Generated detailed commit message and comprehensive prompts documentation
 
 
 ---
