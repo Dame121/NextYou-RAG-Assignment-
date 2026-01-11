@@ -1568,15 +1568,7 @@ https://github.com/user-attachments/assets/yoga-rag-demo.mp4
 
 **[📥 Download Demo Video](demo/yoga-rag-demo.mp4)** | **[📂 View in Demo Folder](demo/)**
 
-### Demo Highlights
-- ✅ **Duration:** 2-5 minutes  
-- ✅ **Content Coverage:**
-  - Application overview and features
-  - RAG pipeline in action (showing source retrieval)
-  - Safety detection demonstration (unsafe query handling)
-  - Feedback system functionality
-  - Source attribution feature
-  - MongoDB logging verification
+
 
 ---
 
