@@ -1562,9 +1562,9 @@ Health check endpoint.
 
 Watch the complete application demonstration:
 
-<video src="demo/yoga-rag-demo.mp4" width="100%" controls>
-  Your browser does not support the video tag.
-</video>
+![Demo Video](demo/yoga-rag-demo.mp4)
+
+**[📥 Download Demo Video](demo/yoga-rag-demo.mp4)** | **[📂 View in Demo Folder](demo/)**
 
 ### Demo Highlights
 - ✅ **Duration:** 2-5 minutes  
