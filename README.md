@@ -1562,7 +1562,10 @@ Health check endpoint.
 
 Watch the complete application demonstration:
 
-![Demo Video](demo/yoga-rag-demo.mp4)
+
+
+https://github.com/user-attachments/assets/edf534e1-1f97-4310-b290-439617a356fb
+
 
 **[📥 Download Demo Video](demo/yoga-rag-demo.mp4)** | **[📂 View in Demo Folder](demo/)**
 
