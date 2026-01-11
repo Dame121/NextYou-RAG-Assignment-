@@ -1,16 +1,12 @@
 # Demo Video
 
-Please place your demo video (2-5 minutes) in this folder.
+Watch the complete application demonstration:
 
-## Video Requirements
-- Duration: 2-5 minutes
-- Format: MP4, AVI, or MOV
-- Content should cover:
-  - Application walkthrough
-  - RAG pipeline in action
-  - Safety detection demonstration
-  - Feedback system
-  - Source attribution feature
+https://github.com/user-attachments/assets/yoga-rag-demo.mp4
 
-## Naming Convention
-- Suggested name: `yoga-rag-demo.mp4`
+## Demo Highlights
+- Application walkthrough
+- RAG pipeline in action
+- Safety detection demonstration
+- Feedback system
+- Source attribution feature
