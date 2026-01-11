@@ -1562,9 +1562,8 @@ Health check endpoint.
 
 Watch the complete application demonstration:
 
-https://github.com/user-attachments/assets/yoga-rag-demo.mp4
 
-> **To display the video inline:** Edit this README on GitHub.com, drag and drop the `demo/yoga-rag-demo.mp4` file into the editor at this location, and GitHub will automatically upload it and replace this link with a working video player.
+https://github.com/user-attachments/assets/edf534e1-1f97-4310-b290-439617a356fb
 
 **[📥 Download Demo Video](demo/yoga-rag-demo.mp4)** | **[📂 View in Demo Folder](demo/)**
 
