@@ -10,16 +10,22 @@ node_modules/
 logs
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
 
 # OS files
 .DS_Store
 Thumbs.db
+*.swp
+*.swo
+*~
 
 # IDE
 .idea/
 .vscode/
-*.swp
-*.swo
+*.sublime-project
+*.sublime-workspace
 
 # Build outputs
 dist/
@@ -39,9 +45,21 @@ ENV/
 .eggs/
 *.egg-info/
 *.egg
+pip-log.txt
+pip-delete-this-directory.txt
 
 # Vector store data (regenerated on init)
 backend/data/
 
 # Streamlit
 .streamlit/
+
+# Testing
+.coverage
+.pytest_cache/
+htmlcov/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
