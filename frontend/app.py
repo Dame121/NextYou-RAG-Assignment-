@@ -1004,7 +1004,7 @@ with st.container():
     
     with col2:
         st.markdown("<br>", unsafe_allow_html=True)
-        submit = st.button("🚀 Send", type="primary", use_container_width=True)
+        submit = st.button("ASK", type="primary", use_container_width=True)
 
 # Process query
 if submit and query.strip():
